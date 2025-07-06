@@ -18,10 +18,6 @@ if missing_files:
     st.stop()
 
 # === Chargement strict des objets ===
-model = None
-scaler = None
-label_encoder = None
-
 try:
     model = keras.models.load_model('model_final_durete_densiter.h5')
 except Exception as e:
@@ -87,13 +83,9 @@ if image_source is not None and submit:
             # Prétraitement tabulaire
             X_tab = scaler.transform([[durete, densite]])
             # Prédiction
-            if model is not None:
-                prediction = model.predict([X_img, X_tab], verbose=0)
-                predicted_index = np.argmax(prediction)
-                predicted_mineral = label_encoder.inverse_transform([predicted_index])[0]
-            else:
-                st.error("❌ Modèle non chargé")
-                st.stop()
+            prediction = model.predict([X_img, X_tab], verbose=0)
+            predicted_index = np.argmax(prediction)
+            predicted_mineral = label_encoder.inverse_transform([predicted_index])[0]
         # Affichage du résultat
         st.markdown("---")
         st.markdown(
@@ -109,9 +101,9 @@ if image_source is not None and submit:
         # Affichage de l'image traitée
         col_img1, col_img2 = st.columns(2)
         with col_img1:
-            st.image(image_source, caption="Image originale")
+            st.image(image_source, caption="Image originale", use_container_width=True)
         with col_img2:
-            st.image(img, caption="🖼️ Image traitée", clamp=True)
+            st.image(img, caption="🖼️ Image traitée", clamp=True, use_container_width=True)
     except Exception as e:
         st.error(f"❌ Erreur lors de la prédiction: {e}")
 
