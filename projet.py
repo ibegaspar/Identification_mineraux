@@ -109,9 +109,9 @@ if image_source is not None and submit:
         # Affichage de l'image traitée
         col_img1, col_img2 = st.columns(2)
         with col_img1:
-            st.image(image_source, caption="Image originale", use_container_width=True)
+            st.image(image_source, caption="Image originale")
         with col_img2:
-            st.image(img, caption="🖼️ Image traitée", clamp=True, use_container_width=True)
+            st.image(img, caption="🖼️ Image traitée", clamp=True)
     except Exception as e:
         st.error(f"❌ Erreur lors de la prédiction: {e}")
 
